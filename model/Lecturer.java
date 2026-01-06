@@ -2,6 +2,11 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * Definiert die Lehrpersonen, die dem Spieler helfen
+ * @author HeinemannLeon
+ */
+
 public class Lecturer implements Serializable {
 
     // Bitte serialVersionUID beibehalten, damit die Klasse bei der

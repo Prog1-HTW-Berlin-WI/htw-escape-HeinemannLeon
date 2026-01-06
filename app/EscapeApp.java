@@ -7,6 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
+/**
+ * Beinhaltet die Auswahlmöglichkeiten des Spielers im Hauptmenü, z.B. Speichern, Fortsetzen...
+ * @author HeinemannLeon
+ */
 public class EscapeApp {
 
     public static final String SAVE_FILE_NAME = "save";

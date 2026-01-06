@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * Hier werden die Gegner des Spielers definiert
+ * @author HeinemannLeon
+ */
 public abstract class Alien {
 
     // Bitte serialVersionUID beibehalten, damit die Klasse bei der

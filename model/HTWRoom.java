@@ -1,7 +1,11 @@
 package model;
 
-import java.io.Serial;
 import java.io.Serializable;
+
+/**
+ * Definiert die Räume der HTW als Handlungsorte des Spiels
+ * @author HeinemannLeon
+ */
 
 public class HTWRoom implements Serializable {
 

@@ -1,8 +1,12 @@
 package app;
 
-import model.Hero;
 import model.HTWRoom;
+import model.Hero;
 
+/**
+ * Beinhaltet die Charaktere und Handlungsorte des Spiels
+ * @author HeinemannLeon
+ */
 public class EscapeGame {
     private final Hero hero;
     private final HTWRoom[] rooms = new HTWRoom[3];
