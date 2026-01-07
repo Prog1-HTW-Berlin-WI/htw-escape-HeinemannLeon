@@ -55,8 +55,8 @@ public class EscapeGame {
         System.out.println("The game has started. Or not?");
     }
     /**
-     * Gibt den Helden des Spiels zurück
-     * @return
+     * holt sich den Helden des Spiels
+     * @return der Held des Spiels 
      */
     public Hero getHero() {
         return hero;
