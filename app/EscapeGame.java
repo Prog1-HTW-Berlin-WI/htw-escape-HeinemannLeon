@@ -2,12 +2,16 @@ package app;
 
 import model.HTWRoom;
 import model.Hero;
+import java.io.Serializable;
 
 /**
  * Beinhaltet die Charaktere und Handlungsorte des Spiels
- * @author HeinemannLeon
+ * @author Leon Heinemann
  */
-public class EscapeGame {
+public class EscapeGame implements Serializable {
+    // serialVersionUID hinzufügen, damit Objekte stabil serialisiert werden können
+    private static final long serialVersionUID = 1L;
+
     private final Hero hero;
     private final HTWRoom[] rooms = new HTWRoom[3];
     private boolean gameRunning = true;

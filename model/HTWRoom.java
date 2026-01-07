@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Definiert die Räume der HTW als Handlungsorte des Spiels
- * @author HeinemannLeon
+ * @author Leon Heinemann
  */
 
 public class HTWRoom implements Serializable {

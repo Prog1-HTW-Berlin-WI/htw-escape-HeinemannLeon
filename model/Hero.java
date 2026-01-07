@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Definiert den Spielercharakter
- * @author HeinemannLeon
+ * @author Leon Heinemann
  */
 public class Hero implements Serializable {
 
