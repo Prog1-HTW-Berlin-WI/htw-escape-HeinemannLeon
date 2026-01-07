@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Definiert die Lehrpersonen, die dem Spieler helfen
  * @author Leon Heinemann
+ * @author Samira Reinhardt
  */
 
 public class Lecturer implements Serializable {

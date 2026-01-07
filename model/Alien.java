@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Hier werden die Gegner des Spielers definiert
  * @author Leon Heinemann
+ * @author Samira Reinhardt
  */
 public abstract class Alien implements Serializable {
 
