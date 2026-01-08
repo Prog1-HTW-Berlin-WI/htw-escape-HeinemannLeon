@@ -14,6 +14,9 @@ public class EscapeGame {
     private boolean gameRunning = true;
     private boolean gameFinished = false;
 
+
+    // Funktioniert es?
+    
     /** 
     * Erstellt ein neues Escapegame mit einem neuen Hero
     */
