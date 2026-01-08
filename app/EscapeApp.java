@@ -10,6 +10,7 @@ import java.util.Scanner;
 /**
  * Beinhaltet die Auswahlmöglichkeiten des Spielers im Hauptmenü, z.B. Speichern, Fortsetzen...
  * @author Leon Heinemann
+ * @author Samira Reinhardt
  */
 public class EscapeApp {
 
