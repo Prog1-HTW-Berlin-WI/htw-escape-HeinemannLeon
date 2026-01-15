@@ -13,15 +13,12 @@ public class EscapeGame {
     private final HTWRoom[] rooms = new HTWRoom[3];
     private boolean gameRunning = true;
     private boolean gameFinished = false;
-
-
-    // Funktioniert es?
     
     /** 
     * Erstellt ein neues Escapegame mit einem neuen Hero
     */
     public EscapeGame() {
-        this.hero = new Hero();
+        this.hero = new Hero("Spieler");
     }
     /**
      * Gibt zurück, ob das Spiel läuft
