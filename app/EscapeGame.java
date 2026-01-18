@@ -40,14 +40,14 @@ public class EscapeGame {
     * Erstellt ein neues Escapegame mit einem neuen Hero
     */
     public EscapeGame(String heroName) {
-        this.hero = new Hero("Spieler");
+        this.hero = new Hero(heroName);
         initializeRooms();
     }
 
     public EscapeGame() {
         this.hero = new Hero("Spieler");
     }
-    
+
     /**
      * Gibt zurück, ob das Spiel läuft
      * @return true, wenn das Spiel läuft, sonst false
@@ -173,19 +173,19 @@ public class EscapeGame {
     if (eventChance < 0.20 + 0.52) {
         double alienChance = Math.random();
         Alien alien;
-        if (alienChance < 0.65) {
-            alien = new FluffPuff();
+        if (alienChance < 0.60) {
+            alien = FluffPuff.getRandomFluffPuff();
         } else {
-            alien = new FaceEater();
+            alien = FaceEater.getRandomFaceEater();
     }
 
         System.out.println(alien.getGreeting());
 
         if (alien.isFriendly()) {
-            return "Das Alien lächelt dich freundlich an. Puh! - Keine Gefahr. Du kommst nun in die nächste Runde. Runde: " + currentRound;
+            return "Das Alien " + alien.getName() + " lächelt dich freundlich an. Puh! - Keine Gefahr. Du kommst nun in die nächste Runde. Runde: " + currentRound;
         }
 
-        return "Das Alien ist feindlich! Entscheide dich - möchtest du kämpfen oder fliehen? (K/F)";
+        return alien.getName() + " ist ein feindliches Alien! Entscheide dich - möchtest du kämpfen oder fliehen? (K/F)";
     }
 
     Lecturer lecturer = currentRoom.getLecturer();

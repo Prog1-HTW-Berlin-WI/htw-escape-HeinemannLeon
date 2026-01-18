@@ -6,8 +6,30 @@ public class FluffPuff extends Alien {
     /**
      * Erstellt ein neues FluffPuff-Alien mit vordefinierten Eigenschaften
      */
-    public FluffPuff() {
-        super("Fluff Puff", 20, true, "\"Hallo, Erdling! Warum schaust du denn so ernst? - lass' dich knuddeln.\"");
+    public FluffPuff(String name, int lifePoints, boolean friendly, String greeting) {
+        super(name, lifePoints, friendly, greeting);
+
     }
 
+    /**
+     * Gibt ein zufälliges FluffPuff-Alien zurück
+     * return eines der FluffPuff-Aliens
+     */
+    public static FluffPuff getRandomFluffPuff() {
+        String[] names = {"Flauschella", "Fluffmann", "Knuddeline", "Knutschhold"};
+        String[] greetings = {
+            "\"Hey, Erdling! Warum so ernst? - Lass' dich knuddeln.\"",
+            "\"Hallöchen! Du bist aber ein niedliches Wesen!\"",
+            "\"Huhu! Nicht erschrecken, ich tu' dir nichts!\"",
+            "\"Yippiiieee! Endlich jemand, den ich abknutschen kann!\""
+        };
+
+        int index = (int) (Math.random() * names.length);
+        String name = names[index];
+        String greeting = greetings[index];
+        int lifePoints = 15 + (int) (Math.random() * 13);
+        boolean friendly = true;
+
+        return new FluffPuff(name, lifePoints, friendly, greeting);
+    }
 }
