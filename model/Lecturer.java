@@ -53,4 +53,8 @@ public class Lecturer implements Serializable {
     public void sign() {
         this.hasSigned = true;
     }
+
+    public String getName() {
+        return name;
+    }
 }

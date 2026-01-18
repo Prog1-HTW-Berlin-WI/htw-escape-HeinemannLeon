@@ -1,7 +1,9 @@
 package app;
 
+import java.util.Scanner;
 import model.HTWRoom;
 import model.Hero;
+import model.Lecturer;
 
 /**
  * Beinhaltet die Charaktere und Handlungsorte des Spiels
@@ -10,16 +12,40 @@ import model.Hero;
  */
 public class EscapeGame {
     private final Hero hero;
-    private final HTWRoom[] rooms = new HTWRoom[3];
+    private final HTWRoom[] rooms = new HTWRoom[8];
     private boolean gameRunning = true;
     private boolean gameFinished = false;
     
+
+    private void initializeRooms() {
+        Lecturer lecturer1 = new Lecturer("Herr Poeser");
+        Lecturer lecturer2 = new Lecturer("Frau Safitri");
+        Lecturer lecturer3 = new Lecturer("Frau Vaseva");
+        Lecturer lecturer4 = new Lecturer("Frau Gärtner");
+        Lecturer lecturer5 = new Lecturer("Herr Gnaoui");
+
+        rooms[0] = new HTWRoom("A219", "Zwei Fenster sind offen, es zieht mörderisch... Die Kälte erzeugt einen schaurigen Nebel.", null);
+        rooms[1] = new HTWRoom("A238", "Durch die großen Fenster kann man den außergewöhnlich blauvioletten Himmel sehen. Auf dem Pult kippt eine Kaffeetasse um.", lecturer2);
+        rooms[2] = new HTWRoom("A214", "Er wird von den leuchtenden Bildschirmen der Computer erhellt. Auf ihnen läuft ein Programm, das den Anschein macht, als würde jemand etwas hacken.", lecturer3);
+        rooms[3] = new HTWRoom("A143", "Es riecht nach alten Socken und merkwürdige Schleimspuren zieren den Boden und die Schreibtische.", null);
+        rooms[4] = new HTWRoom("A015", "Ein riesiger Raum. Die zugezogenen Vorhänge verbannen das Licht, als wäre man in einer geschlossenen Kiste. Ein leises Flüstern tönt aus der Ecke.", lecturer4);
+        rooms[5] = new HTWRoom("A142", "Die Fensterjalousien fahren unkontrolliert hoch und runter. Am anderen Ende des Raums stehen zahlreiche Staffeleien mit riesigen Gemälden. Eine Person tanzt zwischen ihnen herum.", lecturer1);
+        rooms[6] = new HTWRoom("Lesesaal 1", "In der Mitte des Raums ist ein riesiger Haufen Bücher. Lose Seiten fliegen durch die Luft. Die Tische sind kurz- und kleingehauen.", null);
+        rooms[7] = new HTWRoom("Treslounge", "Das gedimmte Licht erzeugt eine ruhige, friedliche Stimmung. Auf einem der schwarzen Ledersofas fläzt eine Gestalt...", lecturer5);
+    }
     /** 
     * Erstellt ein neues Escapegame mit einem neuen Hero
     */
+    public EscapeGame(String heroName) {
+        this.hero = new Hero(heroName);
+        initializeRooms();
+    }
+
     public EscapeGame() {
         this.hero = new Hero("Spieler");
     }
+
+    
     /**
      * Gibt zurück, ob das Spiel läuft
      * @return true, wenn das Spiel läuft, sonst false
@@ -27,6 +53,7 @@ public class EscapeGame {
     public boolean isGameRunning() {
         return gameRunning;
     }
+    
     /**
      * Setzt den Status, ob das Spiel läuft
      * @param gameRunning
@@ -34,6 +61,7 @@ public class EscapeGame {
     public void setGameRunning(boolean gameRunning) {
         this.gameRunning = gameRunning;
     }
+   
     /**
      * Gibt zurück, ob das Spiel beendet ist
      * @return true, wenn das Spiel beendet ist, sonst false
@@ -41,6 +69,7 @@ public class EscapeGame {
     public boolean isGameFinished() {
         return gameFinished;
     }
+    
     /**
      * Setzt den Status, ob das Spiel beendet ist
      * @param gameFinished
@@ -48,12 +77,60 @@ public class EscapeGame {
     public void setGameFinished(boolean gameFinished) {
         this.gameFinished = gameFinished;
     }
+    
     /**
      * Startet das Spiel
      */
     public void run() {
-        System.out.println("The game has started. Or not?");
+        System.out.println("Willkommen zu deinem Abenteuer, " + hero.getName() + "!\n");
+          
+        while (isGameRunning() && !isGameFinished()) {
+            showGameMenu();
+            String choice = readUserInput();
+            handleUserInput(choice);
+            System.out.println("====================");
+        }
     }
+
+    private void showGameMenu() {
+        System.out.println("SPIELMENÜ\n");
+        System.out.println("Was möchtest du tun?\n");
+        System.out.println("(1) Hochschule erkunden");
+        System.out.println("(2) Heldenstatus anzeigen");
+        System.out.println("(3) Laufzettel anzeigen");
+        System.out.println("(4) Verschnaufpause machen");
+        System.out.println("(5) Spiel verlassen");
+    }
+    private String readUserInput() {
+        Scanner scanner2 = new Scanner(System.in);
+        String userInput = scanner2.nextLine();
+        return userInput;
+    }
+    
+    private void handleUserInput(String input) {
+        switch (input) {
+            case "1":
+                String result = this.exploreHTW();
+                System.out.println(result);
+                break;
+            case "2":
+                System.out.println("Platzhalter Heldenstatus anzeigen...");
+            break;
+            case "3":
+                System.out.println("Platzhalter Laufzettel anzeigen...");
+                break;
+            case "4":
+                System.out.println("Platzhalter Verschnaufpause machen...");
+                break;
+            case "5":
+                System.out.println("PLATZHALTER");
+                break;
+            default:
+                System.out.println("Ungültige Eingabe. Bitte wähle eine Zahl zwischen 1 und 5!");
+                break;
+        }
+    }
+   
     /**
      * holt sich den Helden des Spiels
      * @return der Held des Spiels 
@@ -61,4 +138,40 @@ public class EscapeGame {
     public Hero getHero() {
         return hero;
     }
+
+    private static final int MAX_ROUNDS = 24;
+    private int currentRound = 0;
+
+    private boolean isGameFinished = false;
+
+    public String exploreHTW() {
+        currentRound++;
+        if (currentRound > MAX_ROUNDS) {
+            isGameFinished = true;
+            return "Du hast die maximale Rundenzahl erreicht. Das Spiel ist vorbei!";
+    }
+
+    int index = (int) (Math.random() * rooms.length);
+    HTWRoom currentRoom = rooms[index];
+
+    System.out.println("Du gehst in den Raum " + currentRoom.getIdentifier() + ". " + currentRoom.getDescription());
+    
+
+    double eventChance = Math.random();
+    if (eventChance < 0.20) {
+        return "Es passiert nichts Besonderes...";
+    } else if (eventChance < 0.20 + 0.52) {
+        return "Du triffst auf ein Alien!";
+    }
+    Lecturer lecturer = currentRoom.getLecturer();
+    return "Du triffst auf die Übungsgruppenleitung "+lecturer.getName()+"! ";
+    
+    }
+
+    public int getCurrentRound() {
+        return currentRound;
+    }
+    
 }
+
+
