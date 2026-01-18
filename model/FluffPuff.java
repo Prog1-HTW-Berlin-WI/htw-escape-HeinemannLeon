@@ -7,7 +7,7 @@ public class FluffPuff extends Alien {
      * Erstellt ein neues FluffPuff-Alien mit vordefinierten Eigenschaften
      */
     public FluffPuff() {
-        super("Fluff Puff", 20, true, "Das Fluff Puff schnurrt leise und wedelt mit seinem buschigen Schwanz.");
+        super("Fluff Puff", 20, true, "\"Hallo, Erdling! Warum schaust du denn so ernst? - lass' dich knuddeln.\"");
     }
 
 }

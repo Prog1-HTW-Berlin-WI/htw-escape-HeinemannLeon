@@ -125,7 +125,8 @@ public class EscapeGame {
                 System.out.println("Platzhalter Verschnaufpause machen...");
                 break;
             case "5":
-                System.out.println("PLATZHALTER");
+                System.out.println("Zurück zum Hauptmenü...");
+                setGameRunning(false);
                 break;
             default:
                 System.out.println("Ungültige Eingabe. Bitte wähle eine Zahl zwischen 1 und 5!");
@@ -172,7 +173,7 @@ public class EscapeGame {
     if (eventChance < 0.20 + 0.52) {
         double alienChance = Math.random();
         Alien alien;
-        if (alienChance < 0.50) {
+        if (alienChance < 0.65) {
             alien = new FluffPuff();
         } else {
             alien = new FaceEater();
@@ -181,10 +182,10 @@ public class EscapeGame {
         System.out.println(alien.getGreeting());
 
         if (alien.isFriendly()) {
-            return "Das Alien ist freundlich. Du kommst nun in die nächste Runde. Runde: " + currentRound;
+            return "Das Alien lächelt dich freundlich an. Puh! - Keine Gefahr. Du kommst nun in die nächste Runde. Runde: " + currentRound;
         }
 
-        return "Das Alien ist feindlich! Möchtest du kämpfen oder fliehen? (K/F)";
+        return "Das Alien ist feindlich! Entscheide dich - möchtest du kämpfen oder fliehen? (K/F)";
     }
 
     Lecturer lecturer = currentRoom.getLecturer();
@@ -194,7 +195,7 @@ public class EscapeGame {
     }
 
     lecturer.meetHero();
-    System.out.println("Du triffst auf die Übungsgruppenleitung " + lecturer.getName() + ".");
+    System.out.println("Du triffst auf die Übungsgruppenleitung " + lecturer.getName() + "!");
 
     if (lecturer.isReadyToSign()) {
         lecturer.sign();
