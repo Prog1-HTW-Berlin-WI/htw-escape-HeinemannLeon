@@ -25,13 +25,13 @@ public class EscapeGame {
         Lecturer lecturer5 = new Lecturer("Herr Gnaoui");
 
         rooms[0] = new HTWRoom("A219", "Zwei Fenster sind offen, es zieht mörderisch... Die Kälte erzeugt einen schaurigen Nebel.", null);
-        rooms[1] = new HTWRoom("A238", "Durch die großen Fenster kann man den außergewöhnlich blauvioletten Himmel sehen. Auf dem Pult kippt eine Kaffeetasse um.", lecturer2);
+        rooms[1] = new HTWRoom("A238", "Durch die großen Fenster kann man den außergewöhnlich blauvioletten Himmel sehen. Auf dem Pult steht eine große Kaffeetasse.", lecturer2);
         rooms[2] = new HTWRoom("A214", "Er wird von den leuchtenden Bildschirmen der Computer erhellt. Auf ihnen läuft ein Programm, das den Anschein macht, als würde jemand etwas hacken.", lecturer3);
         rooms[3] = new HTWRoom("A143", "Es riecht nach alten Socken und merkwürdige Schleimspuren zieren den Boden und die Schreibtische.", null);
-        rooms[4] = new HTWRoom("A015", "Ein riesiger Raum. Die zugezogenen Vorhänge verbannen das Licht, als wäre man in einer geschlossenen Kiste. Ein leises Flüstern tönt aus der Ecke.", lecturer4);
-        rooms[5] = new HTWRoom("A142", "Die Fensterjalousien fahren unkontrolliert hoch und runter. Am anderen Ende des Raums stehen zahlreiche Staffeleien mit riesigen Gemälden. Eine Person tanzt zwischen ihnen herum.", lecturer1);
+        rooms[4] = new HTWRoom("A015", "Ein riesiger Raum. Die zugezogenen Vorhänge verbannen das Licht, als wäre man in einer geschlossenen Kiste.", lecturer4);
+        rooms[5] = new HTWRoom("A142", "Die Fensterjalousien fahren unkontrolliert hoch und runter. Am anderen Ende des Raums stehen zahlreiche Staffeleien mit riesigen Gemälden.", lecturer1);
         rooms[6] = new HTWRoom("Lesesaal 1", "In der Mitte des Raums ist ein riesiger Haufen Bücher. Lose Seiten fliegen durch die Luft. Die Tische sind kurz- und kleingehauen.", null);
-        rooms[7] = new HTWRoom("Treslounge", "Das gedimmte Licht erzeugt eine ruhige, friedliche Stimmung. Auf einem der schwarzen Ledersofas fläzt eine Gestalt...", lecturer5);
+        rooms[7] = new HTWRoom("Treslounge", "Das gedimmte Licht erzeugt eine ruhige, friedliche Stimmung. Die schwarzen Ledersofas sehen gemütlicher aus denn je...", lecturer5);
     }
     /** 
     * Erstellt ein neues Escapegame mit einem neuen Hero
