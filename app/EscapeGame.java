@@ -4,6 +4,8 @@ import java.util.Scanner;
 import model.HTWRoom;
 import model.Hero;
 import model.Lecturer;
+import model.FluffPuff;
+import model.FaceEater;
 
 /**
  * Beinhaltet die Charaktere und Handlungsorte des Spiels
@@ -25,7 +27,7 @@ public class EscapeGame {
         Lecturer lecturer5 = new Lecturer("Herr Gnaoui");
 
         rooms[0] = new HTWRoom("A219", "Zwei Fenster sind offen, es zieht mörderisch... Die Kälte erzeugt einen schaurigen Nebel.", null);
-        rooms[1] = new HTWRoom("A238", "Durch die großen Fenster kann man den außergewöhnlich blauvioletten Himmel sehen. Auf dem Pult steht eine große Kaffeetasse.", lecturer2);
+        rooms[1] = new HTWRoom("A238", "Durch die großen Fenster kann man den außergewöhnlich blauvioletten Himmel sehen. Auf dem Pult steht eine großeKaffeetasse.", lecturer2);
         rooms[2] = new HTWRoom("A214", "Er wird von den leuchtenden Bildschirmen der Computer erhellt. Auf ihnen läuft ein Programm, das den Anschein macht, als würde jemand etwas hacken.", lecturer3);
         rooms[3] = new HTWRoom("A143", "Es riecht nach alten Socken und merkwürdige Schleimspuren zieren den Boden und die Schreibtische.", null);
         rooms[4] = new HTWRoom("A015", "Ein riesiger Raum. Die zugezogenen Vorhänge verbannen das Licht, als wäre man in einer geschlossenen Kiste.", lecturer4);
@@ -37,14 +39,13 @@ public class EscapeGame {
     * Erstellt ein neues Escapegame mit einem neuen Hero
     */
     public EscapeGame(String heroName) {
-        this.hero = new Hero(heroName);
+        this.hero = new Hero("Spieler");
         initializeRooms();
     }
 
     public EscapeGame() {
         this.hero = new Hero("Spieler");
     }
-
     
     /**
      * Gibt zurück, ob das Spiel läuft
