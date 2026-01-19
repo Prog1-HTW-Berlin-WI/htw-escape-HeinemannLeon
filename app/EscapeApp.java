@@ -213,6 +213,5 @@ public class EscapeApp {
     private boolean hasSavedGame() {
         return new File(SAVE_FILE_NAME).exists();
     }
-    
 }
 

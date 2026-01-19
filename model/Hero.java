@@ -85,8 +85,10 @@ public class Hero implements Serializable {
 
         if (randomValue < 0.13) {
             baseDamage = 0; 
+        System.out.println("Fehlschlag! Dein Angriff verfehlt das Alien.");
         } else if (randomValue < 0.13 + 0.12) {
             baseDamage = baseDamage * 2;
+        System.out.println("Sehr guter Treffer! Das Alien erleidet doppelten Schaden.");
         }
 
         return (int) baseDamage;

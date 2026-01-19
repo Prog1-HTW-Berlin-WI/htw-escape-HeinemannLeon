@@ -52,7 +52,7 @@ public abstract class Alien implements Serializable {
 
     int actualDamage = before - this.lifePoints;
         
-    System.out.println(this.name + " erleidet " + actualDamage + " Schadenspunkte. Verbleibende Lebenspunkte: " + this.lifePoints);
+    System.out.println("Du greifst " + this.name + " an und es erleidet " + actualDamage + " Schadenspunkte. Verbleibende Lebenspunkte: " + this.lifePoints);
     }
 
     public boolean isDefeated() {

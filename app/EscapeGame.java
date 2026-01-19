@@ -18,6 +18,7 @@ public class EscapeGame {
     private final HTWRoom[] rooms = new HTWRoom[8];
     private boolean gameRunning = true;
     private boolean gameFinished = false;
+    private Alien alien;
     
 
     private void initializeRooms() {
@@ -79,7 +80,9 @@ public class EscapeGame {
     public void setGameFinished(boolean gameFinished) {
         this.gameFinished = gameFinished;
     }
-    
+     
+     
+
     /**
      * Startet das Spiel
      */
@@ -116,13 +119,48 @@ public class EscapeGame {
                 System.out.println(result);
                 break;
             case "2":
-                System.out.println("Platzhalter Heldenstatus anzeigen...");
+                System.out.println("Übersicht deines Helden:\n");
+                System.out.println("Name: " + hero.getName());
+                System.out.println("Lebenspunkte: " + hero.getHealthPoints());
+                System.out.println("Erfahrungspunkte: " + hero.getExperiencePoints()); 
             break;
             case "3":
-                System.out.println("Platzhalter Laufzettel anzeigen...");
+                System.out.println("Dein Laufzettel:\n");
+
+                int signedCount = 0;
+                for (int i = 0; i < rooms.length; i++) {
+                    Lecturer lecturer = rooms[i].getLecturer();
+                    if (lecturer == null) {
+                        continue;
+                    }
+                    if (lecturer != null && lecturer.hasSigned() == true) {
+                        signedCount++;
+                    System.out.println(lecturer.getName()+" hat den Laufzettel unterschrieben.");
+                    } else {
+                    System.out.println(lecturer.getName()+" hat den Laufzettel noch nicht unterschrieben.");
+                    }
+            }
+                int missingSignatures = 5 - signedCount;
+                System.out.println("Fehlende Unterschriften: " + missingSignatures + "/5");
+                System.out.println("Aktuelle Runde: " + currentRound + " von " + MAX_ROUNDS);
                 break;
             case "4":
-                System.out.println("Platzhalter Verschnaufpause machen...");
+                System.out.println("Wähle deine Verschnaufpause:\n");
+                System.out.println("(1) Kurze Verschnaufpause (+3 Lebenspunkte, aktuelle Runde fortsetzen)");
+                System.out.println("(2) Lange Verschnaufpause (+10 Lebenspunkte, du kommst in die nächste Runde)");
+                String restChoice = readUserInput();
+
+               if (restChoice.equals("1")) {
+                    hero.regenerate(false);
+                    System.out.println("Du hast eine kurze Verschnaufpause gemacht und 3 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints());
+                } else if (restChoice.equals("2")) {
+                    hero.regenerate(true);
+                    System.out.println("Du hast eine lange Verschnaufpause gemacht und 10 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints());
+                    currentRound++;
+                    System.out.println("Du kommst in die nächste Runde (Runde " + currentRound + ")");
+                } else {
+                    System.out.println("Ungültige Eingabe. Bitte wähle 1 oder 2!");
+                }
                 break;
             case "5":
                 System.out.println("Zurück zum Hauptmenü...");
@@ -143,7 +181,7 @@ public class EscapeGame {
     }
 
     private static final int MAX_ROUNDS = 24;
-    private int currentRound = 0;
+    private int currentRound = 1;
 
     private boolean isGameFinished = false;
 
@@ -151,9 +189,9 @@ public class EscapeGame {
         currentRound++;
         if (currentRound > MAX_ROUNDS) {
             isGameFinished = true;
-            return "Du hast die maximale Rundenzahl erreicht. Das Spiel ist vorbei!";
-    }
-
+            return "Deine Zeit ist um!\nProf. Majuntke steigt in ihr Raumschiff und fliegt zurück auf ihren Heimatplaneten, da sie in Wahrheit ein Alien ist!\nDas Spiel ist vorbei!";
+        }
+    
     int index = (int) (Math.random() * rooms.length);
     HTWRoom currentRoom = rooms[index];
 
@@ -184,11 +222,66 @@ public class EscapeGame {
         if (alien.isFriendly()) {
             return "Das Alien " + alien.getName() + " lächelt dich freundlich an. Puh! - Keine Gefahr. Du kommst nun in die nächste Runde. Runde: " + currentRound;
         }
+        System.out.println(alien.getName() + " ist ein feindliches Alien! Entscheide dich - möchtest du kämpfen oder fliehen? (K/F):");
+        
+        String battleChoice = readUserInput();
 
-        return alien.getName() + " ist ein feindliches Alien! Entscheide dich - möchtest du kämpfen oder fliehen? (K/F)";
+    if (battleChoice.equalsIgnoreCase("K")) {
+            
+        while (!alien.isDefeated() && hero.isOperational()) {
+            int alienDamage = hero.attack();
+            alien.takeDamage(alienDamage);
+
+        if (alien.isDefeated()) {
+            System.out.println("Du hast das Alien " + alien.getName() + " besiegt!");
+            hero.addExperiencePoints(5);
+            return "Du kommst nun in die nächste Runde. (Runde " + (currentRound + 1) + ")";
+            }
+
+            int heroDamage = (int) (Math.random() * 6);
+            hero.takeDamage(heroDamage);
+            System.out.println(alien.getName() + " greift dich an und verursacht " + heroDamage + " Schadenspunkte. Deine verbleibenden Lebenspunkte: " + hero.getHealthPoints());
+
+        if (!hero.isOperational()) {
+            isGameFinished = true;
+            return "Du wurdest von " + alien.getName() + " besiegt. Das Spiel ist vorbei!";
+            }
+        }
+
+    } else if (battleChoice.equalsIgnoreCase("F")) {
+        if (hero.flee()) {
+            return "Puh - die Flucht ist gerade so gelungen! Du kommst nun in die nächste Runde. (Runde " + (currentRound + 1) + ")";
+        }
+        System.out.println("Die Flucht ist misslungen! Du musst das Alien bekämpfen!");
+        
+        while (!alien.isDefeated() && hero.isOperational()) {
+            int alienDamage = hero.attack();
+            System.out.println("Du greifst " + alien.getName() + " an und verursachst " + alienDamage + " Schadenspunkte.");
+            alien.takeDamage(alienDamage);
+            System.out.println(alien.getName() + "s verbleibende Lebenspunkte: " + alien.getLifePoints());
+        
+        if (alien.isDefeated()) {
+            System.out.println("Du hast das Alien " + alien.getName() + " besiegt!");
+            hero.addExperiencePoints(5);
+            return "Du kommst nun in die nächste Runde. (Runde " + (currentRound + 1) + ")";
+            }
+
+            int heroDamage = (int) (Math.random() * 3);
+            System.out.println(alien.getName() + " greift dich an und verursacht " + heroDamage + " Schadenspunkte.");
+            hero.takeDamage(heroDamage);
+            System.out.println("Deine verbleibenden Lebenspunkte: " + hero.getHealthPoints());
+
+        if (!hero.isOperational()) {
+            isGameFinished = true;
+            return "Du wurdest von " + alien.getName() + " besiegt. Das Spiel ist vorbei!";
+            }
+        } 
+    } else {
+        return "Ungültige Eingabe. PLATZHALTER";
     }
+ }
 
-    Lecturer lecturer = currentRoom.getLecturer();
+ Lecturer lecturer = currentRoom.getLecturer();
 
     if (lecturer == null) {
         return "Es ist niemand im Raum.";
@@ -199,18 +292,8 @@ public class EscapeGame {
 
     if (lecturer.isReadyToSign()) {
         lecturer.sign();
-        return "Die Übungsgruppenleitung unterschreibt deinen Laufzettel! Du kommst nun in die nächste Runde. Runde: " + currentRound;
+        return "Die Übungsgruppenleitung unterschreibt deinen Laufzettel! Du kommst nun in die nächste Runde (Runde " + currentRound + ")";
     }
-
-    return "Die Übungsgruppenleitung hat noch keine Zeit für dich. Versuche es in der nächsten Runde erneut. Runde: " + currentRound;
+    return "Die Übungsgruppenleitung ist nicht bereit zu unterschreiben. Vielleicht musst du sie erst überzeugen.";
     }
-
-    public int getCurrentRound() {
-        return currentRound;
-    }
-    
-
-
 }
-
-

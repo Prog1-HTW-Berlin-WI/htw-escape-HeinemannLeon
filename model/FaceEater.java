@@ -27,7 +27,7 @@ public class FaceEater extends Alien {
         int index = (int) (Math.random() * names.length);
         String name = names[index];
         String greeting = greetings[index];
-        int lifePoints = 28 + (int) (Math.random() * 8);
+        int lifePoints = 10 + (int) (Math.random() * 9);
         boolean friendly = false;
 
         return new FaceEater(name, lifePoints, friendly, greeting);
