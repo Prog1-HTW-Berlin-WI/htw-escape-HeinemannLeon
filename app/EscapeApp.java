@@ -23,11 +23,12 @@ public class EscapeApp {
      * Das Spiel selbst
      */
     private EscapeGame game;
+    
     /**
      * Prüft, ob das Spiel läuft
      * @return true, wenn das Spiel läuft; false, wenn nicht
      */
-    private boolean gameRunning = true;
+    private final boolean GAME_RUNNING = true;
 
     /**
      * Gibt Eingaben auf der Konsole aus
@@ -93,10 +94,7 @@ public class EscapeApp {
     private void handleUserInput(String input) {
         switch (input) {
             case "1":
-                System.out.print("Gib deinen Heldennamen ein: ");
-                String heroName = readUserInput();
-                this.game = new EscapeGame(heroName);
-                this.game.run();
+                this.startGame();
                 break;
             case "2":
                 if (!isGameRunning()) {
@@ -114,7 +112,7 @@ public class EscapeApp {
                 this.resumeGame();
                 break;
             case "4":
-                if (!isGameRunning()) {
+                if (!isGameRunning() || isGameFinished()) {
                     System.out.println("Du hast noch kein Spiel, das du speichern kannst!");
                     break;
                 } 
@@ -141,7 +139,9 @@ public class EscapeApp {
      * Startet ein neues Spiel
      */
     private void startGame() {
-        this.game = new EscapeGame();
+       System.out.print("Gib deinen Heldennamen ein: ");
+        String heroName = readUserInput();
+        this.game = new EscapeGame(heroName);
         resumeGame();
     }
 
@@ -195,7 +195,7 @@ public class EscapeApp {
      * @return true, wenn es läuft; false wenn nicht
      */
     private boolean isGameRunning() {
-        return game != null;
+        return GAME_RUNNING;
     }
 
     /**

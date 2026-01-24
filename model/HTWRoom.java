@@ -54,4 +54,8 @@ public class HTWRoom implements Serializable {
     public Lecturer getLecturer() {
         return lecturer;
     }
+
+    public void setLecturer(Lecturer lecturer) {
+        this.lecturer = lecturer;
+    }
 }

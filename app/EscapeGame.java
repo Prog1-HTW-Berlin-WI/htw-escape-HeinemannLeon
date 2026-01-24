@@ -18,8 +18,8 @@ public class EscapeGame {
     private final HTWRoom[] rooms = new HTWRoom[8];
     private boolean gameRunning = true;
     private boolean gameFinished = false;
-    private Alien alien;
-    
+    private boolean shortRestTaken = false;
+    private int signedCount = 0;
 
     private void initializeRooms() {
         Lecturer lecturer1 = new Lecturer("Herr Poeser");
@@ -87,7 +87,7 @@ public class EscapeGame {
      * Startet das Spiel
      */
     public void run() {
-        System.out.println("Willkommen zu deinem Abenteuer, " + hero.getName() + "!\n");
+        System.out.println("\nWillkommen zu deinem Abenteuer, " + hero.getName() + "!\n");
           
         while (isGameRunning() && !isGameFinished()) {
             showGameMenu();
@@ -152,14 +152,29 @@ public class EscapeGame {
 
                if (restChoice.equals("1")) {
                     hero.regenerate(false);
+                    
+                    if (shortRestTaken == false) {
                     System.out.println("Du hast eine kurze Verschnaufpause gemacht und 3 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints());
+                    shortRestTaken = true;
+                    } else if (shortRestTaken == true) {
+                    System.out.println("Du hast bereits eine kurze Verschnaufpause in dieser Runde gemacht. Du kannst nur eine kurze Verschnaufpause pro Runde machen.");
+                    }
                 } else if (restChoice.equals("2")) {
                     hero.regenerate(true);
                     System.out.println("Du hast eine lange Verschnaufpause gemacht und 10 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints());
                     currentRound++;
-                    System.out.println("Du kommst in die nächste Runde (Runde " + currentRound + ")");
+                    
                 } else {
-                    System.out.println("Ungültige Eingabe. Bitte wähle 1 oder 2!");
+                    while (restChoice.equals("1") == false && restChoice.equals("2") == false) {
+                        System.out.println("Ungültige Eingabe. Bitte wähle 1 oder 2:");
+                        restChoice = readUserInput();
+                        if (restChoice.equals("1") && shortRestTaken == false) {
+                        System.out.println("Du hast eine kurze Verschnaufpause gemacht und 3 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints());
+                        shortRestTaken = true;
+                    }  else if (restChoice.equals("1") && shortRestTaken == true) {
+                    System.out.println("Du hast bereits eine kurze Verschnaufpause in dieser Runde gemacht. Du kannst nur eine kurze Verschnaufpause pro Runde machen.");
+                    } 
+                    }
                 }
                 break;
             case "5":
@@ -181,15 +196,29 @@ public class EscapeGame {
     }
 
     private static final int MAX_ROUNDS = 24;
-    private int currentRound = 1;
+    private int currentRound = 0;
 
-    private boolean isGameFinished = false;
+    public boolean isGameFinished = false;
 
     public String exploreHTW() {
-        currentRound++;
-        if (currentRound > MAX_ROUNDS) {
+       
+            currentRound++;
+       
+            if (currentRound > MAX_ROUNDS) {
             isGameFinished = true;
             return "Deine Zeit ist um!\nProf. Majuntke steigt in ihr Raumschiff und fliegt zurück auf ihren Heimatplaneten, da sie in Wahrheit ein Alien ist!\nDas Spiel ist vorbei!";
+            }
+            System.out.println("=== Runde " + currentRound + " von " + MAX_ROUNDS + " ===\n");
+
+        if (signedCount == 5) {
+            boolean passedQuiz = majuntkeQuiz();
+            if (passedQuiz) {
+                isGameFinished = true;
+                return "Die Türen der HTW öffnen sich wieder und du trittst hinaus in die Freiheit!\nHerzlichen Glückwunsch, du hast das Spiel gewonnen!";
+            } else {
+                isGameFinished = true;
+                return "Leider bist du am Quiz kläglich gescheitert.\nProf. Majuntke steigt in ihr Raumschiff und fliegt zurück auf ihren Heimatplaneten, da sie in Wahrheit ein Alien ist!\nDas Spiel ist vorbei!";
+            }
         }
     
     int index = (int) (Math.random() * rooms.length);
@@ -211,7 +240,7 @@ public class EscapeGame {
     if (eventChance < 0.20 + 0.52) {
         double alienChance = Math.random();
         Alien alien;
-        if (alienChance < 0.60) {
+        if (alienChance < 0.65) {
             alien = FluffPuff.getRandomFluffPuff();
         } else {
             alien = FaceEater.getRandomFaceEater();
@@ -220,7 +249,7 @@ public class EscapeGame {
         System.out.println(alien.getGreeting());
 
         if (alien.isFriendly()) {
-            return "Das Alien " + alien.getName() + " lächelt dich freundlich an. Puh! - Keine Gefahr. Du kommst nun in die nächste Runde. Runde: " + currentRound;
+            return "Das Alien " + alien.getName() + " lächelt dich freundlich an. Puh! - Keine Gefahr.";
         }
         System.out.println(alien.getName() + " ist ein feindliches Alien! Entscheide dich - möchtest du kämpfen oder fliehen? (K/F):");
         
@@ -233,37 +262,34 @@ public class EscapeGame {
             alien.takeDamage(alienDamage);
 
         if (alien.isDefeated()) {
-            System.out.println("Du hast das Alien " + alien.getName() + " besiegt!");
+            System.out.println("\nDu hast das Alien " + alien.getName() + " besiegt!");
             hero.addExperiencePoints(5);
-            return "Du kommst nun in die nächste Runde. (Runde " + (currentRound + 1) + ")";
+            return "Du erhältst 5 Erfahrungspunkte!";
             }
 
             int heroDamage = (int) (Math.random() * 6);
             hero.takeDamage(heroDamage);
-            System.out.println(alien.getName() + " greift dich an und verursacht " + heroDamage + " Schadenspunkte. Deine verbleibenden Lebenspunkte: " + hero.getHealthPoints());
+            System.out.println(alien.getName() + " greift dich an und verursacht " + heroDamage + " Schadenspunkte. Deine verbleibenden Lebenspunkte: " + hero.getHealthPoints() + "\n");
 
         if (!hero.isOperational()) {
             isGameFinished = true;
-            return "Du wurdest von " + alien.getName() + " besiegt. Das Spiel ist vorbei!";
+            return "\nDu wurdest von " + alien.getName() + " besiegt. Das Spiel ist vorbei!";
             }
         }
 
     } else if (battleChoice.equalsIgnoreCase("F")) {
         if (hero.flee()) {
-            return "Puh - die Flucht ist gerade so gelungen! Du kommst nun in die nächste Runde. (Runde " + (currentRound + 1) + ")";
+            return "Puh - die Flucht ist gerade so gelungen!";
         }
         System.out.println("Die Flucht ist misslungen! Du musst das Alien bekämpfen!");
         
         while (!alien.isDefeated() && hero.isOperational()) {
             int alienDamage = hero.attack();
-            System.out.println("Du greifst " + alien.getName() + " an und verursachst " + alienDamage + " Schadenspunkte.");
             alien.takeDamage(alienDamage);
-            System.out.println(alien.getName() + "s verbleibende Lebenspunkte: " + alien.getLifePoints());
         
         if (alien.isDefeated()) {
-            System.out.println("Du hast das Alien " + alien.getName() + " besiegt!");
             hero.addExperiencePoints(5);
-            return "Du kommst nun in die nächste Runde. (Runde " + (currentRound + 1) + ")";
+            return "\nDu hast das Alien " + alien.getName() + " besiegt! Du erhältst 5 Erfahrungspunkte.";
             }
 
             int heroDamage = (int) (Math.random() * 3);
@@ -280,8 +306,8 @@ public class EscapeGame {
         return "Ungültige Eingabe. PLATZHALTER";
     }
  }
-
- Lecturer lecturer = currentRoom.getLecturer();
+    
+Lecturer lecturer = currentRoom.getLecturer();
 
     if (lecturer == null) {
         return "Es ist niemand im Raum.";
@@ -292,8 +318,72 @@ public class EscapeGame {
 
     if (lecturer.isReadyToSign()) {
         lecturer.sign();
-        return "Die Übungsgruppenleitung unterschreibt deinen Laufzettel! Du kommst nun in die nächste Runde (Runde " + currentRound + ")";
+        signedCount++;
+        currentRoom.setLecturer(null);
+        return "Die Übungsgruppenleitung unterschreibt deinen Laufzettel!";
     }
-    return "Die Übungsgruppenleitung ist nicht bereit zu unterschreiben. Vielleicht musst du sie erst überzeugen.";
+    return "Die Übungsgruppenleitung unterschreibt deinen Laufzettel!";
+}
+
+public boolean majuntkeQuiz() {
+    int question = (int) (Math.random() * 3) + 1;
+    int attempts = 0;
+
+    System.out.println("\nNachdem du dir die letzte Unterschrift geholt hast, kommst du aus dem Raum und siehst Prof. Majuntke am Ende des Flurs!\nSie sagt: \"Da bist du ja endlich!\"\n");
+   
+    while (attempts < 2) {
+        attempts++;
+
+        System.out.println("Sie stellt dir eine Frage:");
+
+        switch (question) {
+            case 1:
+                System.out.println("Was liefert der Aufruf 'Math.random()' in Java?");
+                System.out.println("(A) Eine zufällige Ganzzahl");
+                System.out.println("(B) Eine zufällige Fließkommazahl zwischen 0.0 und 1.0");
+                System.out.println("(C) Eine zufällige Zeichenkette");
+                System.out.println("(D) Einen zufälligen Boolean-Wert");
+                break;
+            case 2:
+                System.out.println("Was bedeutet es, wenn eine Methode in Java 'void' ist?");
+                System.out.println("(A) Die Methode ist statisch");
+                System.out.println("(B) Die Methode ist privat");
+                System.out.println("(C) Die Methode gibt keinen Wert zurück");
+                System.out.println("(D) Die Methode hat keine Parameter");
+                break;
+            case 3:
+                System.out.println("Welches Schlüsselwort wird verwendet, um eine Klasse in Java zu erben?");
+                System.out.println("(A) extends");
+                System.out.println("(B) implements");
+                System.out.println("(C) inherits");
+                System.out.println("(D) super");
+                break;
+        }
+
+        System.out.print("Deine Antwort (A, B, C oder D): ");
+        String answer = readUserInput().toUpperCase();
+
+        boolean correct = false;
+
+        if (question == 1 && answer.equals("B")) {
+            correct = true;
+        } else if (question == 2 && answer.equals("C")) {
+            correct = true;
+        } else if (question == 3 && answer.equals("A")) {
+            correct = true;
+        }
+
+        if (correct) {
+            System.out.println("Deine Antwort ist richtig! Prof. Majuntke lächelt dich stolz an.");
+            return true;
+        } else {
+            if (attempts < 2) {
+            System.out.println("Das war leider falsch! Streng' dich an - einen Versuch bekommst du noch.\n");
+            question = (int) (Math.random() * 3) + 1;
+        }
+    }
+}
+System.out.println("Das war wieder falsch!\nProf. Majuntke schüttelt enttäuscht den Kopf und sagt: \"Ach herrje! Du solltest das Modul wohl besser wiederholen...\"");
+    return false;
     }
 }
