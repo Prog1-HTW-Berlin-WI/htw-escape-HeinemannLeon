@@ -28,7 +28,9 @@ public class EscapeApp {
      * Prüft, ob das Spiel läuft
      * @return true, wenn das Spiel läuft; false, wenn nicht
      */
-    private final boolean GAME_RUNNING = true;
+    private boolean gameRunning = true;
+
+    private boolean hasStartedGame = false;
 
     /**
      * Gibt Eingaben auf der Konsole aus
@@ -58,22 +60,21 @@ public class EscapeApp {
         System.out.println("HAUPTMENÜ\n");
         System.out.println("Was möchtest du tun?\n");
         System.out.println("(1) Neues Spiel starten");
-        if (isGameRunning()){
+        if (isGameRunning() && !isGameFinished() && hasStartedGame) {
             System.out.println("(2) Spiel fortsetzen");
         }
-        if (hasSavedGame()){
+        if (hasSavedGame() && !isGameRunning() && !isGameFinished() && hasStartedGame) {
             System.out.println("(3) Spiel laden");
         } 
-        if (isGameRunning()) {
+        if (isGameRunning() && !isGameFinished() && hasStartedGame) {
             System.out.println("(4) Spiel speichern");
         }
-        if (hasSavedGame()) {
+        if (hasSavedGame() && !isGameFinished() && hasStartedGame) {
             System.out.println("(5) Bestehendes Spiel löschen");
-            this.game = null;
         }
         System.out.println("(6) Spiel beenden");
         System.out.println("");
-        System.out.println("Gib eine Nummer zwischen 1 und 6 ein: ");
+        System.out.print("Gib eine Nummer zwischen 1 und 6 ein: ");
     }
 
     /**
@@ -94,6 +95,7 @@ public class EscapeApp {
     private void handleUserInput(String input) {
         switch (input) {
             case "1":
+                this.hasStartedGame = true;
                 this.startGame();
                 break;
             case "2":
@@ -124,6 +126,8 @@ public class EscapeApp {
                     break;
                 }
                 this.deleteGame();
+                this.game = null;
+                this.hasStartedGame = false;
                 break;
             case "6":
                 System.out.println("Bis bald!");
@@ -142,7 +146,7 @@ public class EscapeApp {
        System.out.print("Gib deinen Heldennamen ein: ");
         String heroName = readUserInput();
         this.game = new EscapeGame(heroName);
-        resumeGame();
+        this.resumeGame();
     }
 
     /**
@@ -195,7 +199,7 @@ public class EscapeApp {
      * @return true, wenn es läuft; false wenn nicht
      */
     private boolean isGameRunning() {
-        return GAME_RUNNING;
+        return this.gameRunning;
     }
 
     /**

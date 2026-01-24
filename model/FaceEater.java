@@ -18,10 +18,10 @@ public class FaceEater extends Alien {
     public static FaceEater getRandomFaceEater() {
         String[] names = {"Knabberina", "Beißhard", "Schmatzbert", "Schluckrich"};
         String[] greetings = {
-            "\"Mmhhh... Dein Gesicht sieht lecker aus!\"",
-            "\"Du kommst genau richtig zu meiner Mittagszeit!\"",
-            "\"Dein Gesicht wird mein Abendessen sein!\"",
-            "\"Ich liebe den Geschmack von ängstlichen Gesichtern!\""
+            "\n\"Mmhhh... Dein Gesicht sieht lecker aus!\"",
+            "\n\"Du kommst genau richtig zu meiner Mittagszeit!\"",
+            "\n\"Dein Gesicht wird mein Abendessen sein!\"",
+            "\n\"Ich liebe den Geschmack von ängstlichen Gesichtern!\""
         };
 
         int index = (int) (Math.random() * names.length);

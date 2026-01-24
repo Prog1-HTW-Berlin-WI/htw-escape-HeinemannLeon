@@ -18,10 +18,10 @@ public class FluffPuff extends Alien {
     public static FluffPuff getRandomFluffPuff() {
         String[] names = {"Flauschella", "Fluffmann", "Knuddeline", "Knutschhold"};
         String[] greetings = {
-            "\"Hey, Erdling! Warum so ernst? - Lass' dich knuddeln.\"",
-            "\"Hallöchen! Du bist aber ein niedliches Wesen!\"",
-            "\"Huhu! Nicht erschrecken, ich tu' dir nichts!\"",
-            "\"Yippiiieee! Endlich jemand, den ich abknutschen kann!\""
+            "\n\"Hey, Erdling! Warum so ernst? - Lass' dich knuddeln.\"",
+            "\n\"Hallöchen! Du bist aber ein niedliches Wesen!\"",
+            "\n\"Huhu! Nicht erschrecken, ich tu' dir nichts!\"",
+            "\n\"Yippiiieee! Endlich jemand, den ich abknutschen kann!\""
         };
 
         int index = (int) (Math.random() * names.length);

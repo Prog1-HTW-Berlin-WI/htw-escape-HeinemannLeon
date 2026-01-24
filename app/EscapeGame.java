@@ -16,7 +16,7 @@ import model.Lecturer;
 public class EscapeGame {
     private final Hero hero;
     private final HTWRoom[] rooms = new HTWRoom[8];
-    private boolean gameRunning = true;
+    public boolean gameRunning = true;
     private boolean gameFinished = false;
     private boolean shortRestTaken = false;
     private int signedCount = 0;
@@ -70,7 +70,7 @@ public class EscapeGame {
      * @return true, wenn das Spiel beendet ist, sonst false
      */
     public boolean isGameFinished() {
-        return gameFinished;
+        return this.gameFinished;
     }
     
     /**
@@ -88,7 +88,7 @@ public class EscapeGame {
      */
     public void run() {
         System.out.println("\nWillkommen zu deinem Abenteuer, " + hero.getName() + "!\n");
-          
+
         while (isGameRunning() && !isGameFinished()) {
             showGameMenu();
             String choice = readUserInput();
@@ -203,24 +203,30 @@ public class EscapeGame {
     public String exploreHTW() {
        
             currentRound++;
+
+            if (isGameFinished == true) {
+            setGameRunning(false);
+            this.game = null;
+            }
        
             if (currentRound > MAX_ROUNDS) {
-            isGameFinished = true;
-            return "Deine Zeit ist um!\nProf. Majuntke steigt in ihr Raumschiff und fliegt zurück auf ihren Heimatplaneten, da sie in Wahrheit ein Alien ist!\nDas Spiel ist vorbei!";
+            gameFinished = true;
+            return "Deine Zeit ist um!\nProf. Majuntke steigt in ihr Raumschiff und fliegt zurück auf ihren Heimatplaneten, da sie in Wahrheit ein Alien ist!\nDas Spiel ist vorbei!\n";
             }
+            
             System.out.println("=== Runde " + currentRound + " von " + MAX_ROUNDS + " ===\n");
 
         if (signedCount == 5) {
             boolean passedQuiz = majuntkeQuiz();
             if (passedQuiz) {
-                isGameFinished = true;
-                return "Die Türen der HTW öffnen sich wieder und du trittst hinaus in die Freiheit!\nHerzlichen Glückwunsch, du hast das Spiel gewonnen!";
+                gameFinished = true;
+                return "Die Türen der HTW öffnen sich wieder und du trittst hinaus in die Freiheit!\nHerzlichen Glückwunsch, du hast das Spiel gewonnen!\n";
             } else {
-                isGameFinished = true;
-                return "Leider bist du am Quiz kläglich gescheitert.\nProf. Majuntke steigt in ihr Raumschiff und fliegt zurück auf ihren Heimatplaneten, da sie in Wahrheit ein Alien ist!\nDas Spiel ist vorbei!";
+                gameFinished = true;
+                return "Leider bist du am Quiz kläglich gescheitert.\nProf. Majuntke steigt in ihr Raumschiff und fliegt zurück auf ihren Heimatplaneten, da sie in Wahrheit ein Alien ist!\nDas Spiel ist vorbei!\n";
             }
         }
-    
+        
     int index = (int) (Math.random() * rooms.length);
     HTWRoom currentRoom = rooms[index];
 
@@ -234,7 +240,7 @@ public class EscapeGame {
     double eventChance = Math.random();
 
     if (eventChance < 0.20) {
-        return "Es passiert nichts Besonderes...";
+        return "Es passiert nichts Besonderes...\n";
     }
     
     if (eventChance < 0.20 + 0.52) {
@@ -249,7 +255,7 @@ public class EscapeGame {
         System.out.println(alien.getGreeting());
 
         if (alien.isFriendly()) {
-            return "Das Alien " + alien.getName() + " lächelt dich freundlich an. Puh! - Keine Gefahr.";
+            return "Das Alien " + alien.getName() + " lächelt dich freundlich an. Puh! - Keine Gefahr.\n";
         }
         System.out.println(alien.getName() + " ist ein feindliches Alien! Entscheide dich - möchtest du kämpfen oder fliehen? (K/F):");
         
@@ -264,7 +270,7 @@ public class EscapeGame {
         if (alien.isDefeated()) {
             System.out.println("\nDu hast das Alien " + alien.getName() + " besiegt!");
             hero.addExperiencePoints(5);
-            return "Du erhältst 5 Erfahrungspunkte!";
+            return "Du erhältst 5 Erfahrungspunkte!\n";
             }
 
             int heroDamage = (int) (Math.random() * 6);
@@ -272,7 +278,7 @@ public class EscapeGame {
             System.out.println(alien.getName() + " greift dich an und verursacht " + heroDamage + " Schadenspunkte. Deine verbleibenden Lebenspunkte: " + hero.getHealthPoints() + "\n");
 
         if (!hero.isOperational()) {
-            isGameFinished = true;
+            gameFinished = true;
             return "\nDu wurdest von " + alien.getName() + " besiegt. Das Spiel ist vorbei!";
             }
         }
@@ -281,7 +287,7 @@ public class EscapeGame {
         if (hero.flee()) {
             return "Puh - die Flucht ist gerade so gelungen!";
         }
-        System.out.println("Die Flucht ist misslungen! Du musst das Alien bekämpfen!");
+        System.out.println("Die Flucht ist misslungen! Du musst das Alien bekämpfen!\n");
         
         while (!alien.isDefeated() && hero.isOperational()) {
             int alienDamage = hero.attack();
@@ -289,41 +295,88 @@ public class EscapeGame {
         
         if (alien.isDefeated()) {
             hero.addExperiencePoints(5);
-            return "\nDu hast das Alien " + alien.getName() + " besiegt! Du erhältst 5 Erfahrungspunkte.";
+            return "\nDu hast das Alien " + alien.getName() + " besiegt!\nDu erhältst 5 Erfahrungspunkte!\n";
             }
 
-            int heroDamage = (int) (Math.random() * 3);
-            System.out.println(alien.getName() + " greift dich an und verursacht " + heroDamage + " Schadenspunkte.");
+            int heroDamage = (int) (Math.random() * 6);
             hero.takeDamage(heroDamage);
-            System.out.println("Deine verbleibenden Lebenspunkte: " + hero.getHealthPoints());
-
+            System.out.println(alien.getName() + " greift dich an und verursacht " + heroDamage + " Schadenspunkte. Deine verbleibenden Lebenspunkte: " + hero.getHealthPoints() + "\n");
+           
         if (!hero.isOperational()) {
-            isGameFinished = true;
+            gameFinished = true;
             return "Du wurdest von " + alien.getName() + " besiegt. Das Spiel ist vorbei!";
             }
         } 
     } else {
-        return "Ungültige Eingabe. PLATZHALTER";
-    }
- }
-    
-Lecturer lecturer = currentRoom.getLecturer();
+        while (battleChoice.equalsIgnoreCase("K") == false && battleChoice.equalsIgnoreCase("F") == false) {
+            System.out.println("Ungültige Eingabe. Bitte gib K oder F ein!");
+            battleChoice = readUserInput();
+            if (battleChoice.equalsIgnoreCase("K")) {
+                while (!alien.isDefeated() && hero.isOperational()) {
+                    int alienDamage = hero.attack();
+                    alien.takeDamage(alienDamage);
+                
+                if (alien.isDefeated()) {
+                    System.out.println("\nDu hast das Alien " + alien.getName() + " besiegt!");
+                    hero.addExperiencePoints(5);
+                    return "Du erhältst 5 Erfahrungspunkte!\n";
+                    }
 
-    if (lecturer == null) {
-        return "Es ist niemand im Raum.";
+                    int heroDamage = (int) (Math.random() * 6);
+                    hero.takeDamage(heroDamage);
+                    System.out.println(alien.getName() + " greift dich an und verursacht " + heroDamage + " Schadenspunkte. Deine verbleibenden Lebenspunkte: " + hero.getHealthPoints() + "\n");
+
+                if (!hero.isOperational()) {
+                    gameFinished = true;
+                    return "\nDu wurdest von " + alien.getName() + " besiegt. Das Spiel ist vorbei!";
+                    }
+                }
+            } else if (battleChoice.equalsIgnoreCase("F")) {
+                if (hero.flee()) {
+                    return "Puh - die Flucht ist gerade so gelungen!";
+                }
+                System.out.println("Die Flucht ist misslungen! Du musst das Alien bekämpfen!\n");
+                
+                while (!alien.isDefeated() && hero.isOperational()) {
+                    int alienDamage = hero.attack();
+                    alien.takeDamage(alienDamage);
+                
+                if (alien.isDefeated()) {
+                    hero.addExperiencePoints(5);
+                    return "\nDu hast das Alien " + alien.getName() + " besiegt!\nDu erhältst 5 Erfahrungspunkte!\n";
+                    }
+
+                    int heroDamage = (int) (Math.random() * 6);
+                    hero.takeDamage(heroDamage);
+                    System.out.println(alien.getName() + " greift dich an und verursacht " + heroDamage + " Schadenspunkte. Deine verbleibenden Lebenspunkte: " + hero.getHealthPoints() + "\n");
+                   
+                if (!hero.isOperational()) {
+                    gameFinished = true;
+                    return "Du wurdest von " + alien.getName() + " besiegt. Das Spiel ist vorbei!";
+                    }
+                }
+            }
+        }
     }
+}
+    if (eventChance < 0.20 + 0.52 + 0.28) {
+    Lecturer lecturer = currentRoom.getLecturer();
+
+        if (lecturer == null || !lecturer.isAvailable()) {
+        return "Es ist niemand im Raum.\n";
+        }
 
     lecturer.meetHero();
     System.out.println("Du triffst auf die Übungsgruppenleitung " + lecturer.getName() + "!");
 
-    if (lecturer.isReadyToSign()) {
-        lecturer.sign();
-        signedCount++;
-        currentRoom.setLecturer(null);
+        if (lecturer.isReadyToSign()) {
+            lecturer.sign();
+            signedCount++;
         return "Die Übungsgruppenleitung unterschreibt deinen Laufzettel!";
+        }
     }
-    return "Die Übungsgruppenleitung unterschreibt deinen Laufzettel!";
-}
+    return "Platzhalter";
+    }
 
 public boolean majuntkeQuiz() {
     int question = (int) (Math.random() * 3) + 1;

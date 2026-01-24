@@ -18,6 +18,7 @@ public class Lecturer implements Serializable {
     private String name;
     private boolean hasSigned;
     private boolean hasMetHero;
+    private boolean isAvailable;
 
     /**
      * Erstellt einen neuen Übungsleiter mit dem angegebenen Namen
@@ -27,6 +28,7 @@ public class Lecturer implements Serializable {
         this.name = name;
         this.hasSigned = false;
         this.hasMetHero = false;
+        this.isAvailable = true;
     }
     /**
      * Markiert den Lecturer als getroffen
@@ -40,7 +42,7 @@ public class Lecturer implements Serializable {
      * @return true, wenn noch nicht unterschrieben wurde und er den Helden getroffen hat, sonst false
      */
     public boolean isReadyToSign() {
-        if (!hasSigned && hasMetHero) {
+        if (!hasSigned && hasMetHero && isAvailable) {
             return true;
         } else {
             return false;
@@ -52,6 +54,7 @@ public class Lecturer implements Serializable {
      */
     public void sign() {
         this.hasSigned = true;
+        this.isAvailable = false;
     }
 
     public String getName() {
@@ -60,5 +63,9 @@ public class Lecturer implements Serializable {
 
     public boolean hasSigned() {
         return this.hasSigned;
+    }
+
+    public boolean isAvailable() {
+        return this.isAvailable;
     }
 }
