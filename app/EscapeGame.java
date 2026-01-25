@@ -17,6 +17,7 @@ public class EscapeGame {
     private final Hero hero;
     private final HTWRoom[] rooms = new HTWRoom[8];
     public boolean gameRunning = true;
+    public EscapeGame game;
     private boolean gameFinished = false;
     private boolean shortRestTaken = false;
     private int signedCount = 0;
@@ -154,14 +155,14 @@ public class EscapeGame {
                     hero.regenerate(false);
                     
                     if (shortRestTaken == false) {
-                    System.out.println("Du hast eine kurze Verschnaufpause gemacht und 3 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints());
+                    System.out.println("Du hast eine kurze Verschnaufpause gemacht und 3 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints() + "\n");
                     shortRestTaken = true;
                     } else if (shortRestTaken == true) {
-                    System.out.println("Du hast bereits eine kurze Verschnaufpause in dieser Runde gemacht. Du kannst nur eine kurze Verschnaufpause pro Runde machen.");
+                    System.out.println("Du hast bereits eine kurze Verschnaufpause in dieser Runde gemacht. Du kannst nur eine kurze Verschnaufpause pro Runde machen.\n");
                     }
                 } else if (restChoice.equals("2")) {
                     hero.regenerate(true);
-                    System.out.println("Du hast eine lange Verschnaufpause gemacht und 10 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints());
+                    System.out.println("Du hast eine lange Verschnaufpause gemacht und 10 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints() + "\n");
                     currentRound++;
                     
                 } else {
@@ -169,10 +170,10 @@ public class EscapeGame {
                         System.out.println("Ungültige Eingabe. Bitte wähle 1 oder 2:");
                         restChoice = readUserInput();
                         if (restChoice.equals("1") && shortRestTaken == false) {
-                        System.out.println("Du hast eine kurze Verschnaufpause gemacht und 3 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints());
+                        System.out.println("Du hast eine kurze Verschnaufpause gemacht und 3 Lebenspunkte erhalten. Deine aktuellen Lebenspunkte: " + hero.getHealthPoints() + "\n");
                         shortRestTaken = true;
                     }  else if (restChoice.equals("1") && shortRestTaken == true) {
-                    System.out.println("Du hast bereits eine kurze Verschnaufpause in dieser Runde gemacht. Du kannst nur eine kurze Verschnaufpause pro Runde machen.");
+                    System.out.println("Du hast bereits eine kurze Verschnaufpause in dieser Runde gemacht. Du kannst nur eine kurze Verschnaufpause pro Runde machen.\n");
                     } 
                     }
                 }
@@ -372,7 +373,7 @@ public class EscapeGame {
         if (lecturer.isReadyToSign()) {
             lecturer.sign();
             signedCount++;
-        return "Die Übungsgruppenleitung unterschreibt deinen Laufzettel!";
+        return "Die Übungsgruppenleitung unterschreibt deinen Laufzettel!\n";
         }
     }
     return "Platzhalter";
