@@ -76,8 +76,8 @@ public class Hero implements Serializable {
     }
 
     /**
-     * Der Held greift an
-     * @return Schadenspunkte
+     * bestimmt den Schaden des Heldenangriffs
+     * @return Schadenspunkte 
      */
     public int attack() {
         double baseDamage = experiencePoints * 2.3 + 1;

@@ -36,6 +36,10 @@ public abstract class Alien implements Serializable {
         this.greeting = greeting;
     }
 
+    /**
+     * berechnet den Schaden, den das Alien erleidet und gibt das Ergebnis aus
+     * @param amount Schadenspunkte
+     */
     public void takeDamage(int amount) {
         int damage = amount;
 
@@ -55,6 +59,10 @@ public abstract class Alien implements Serializable {
     System.out.println("Du greifst " + this.name + " an und es erleidet " + actualDamage + " Schadenspunkte. " + this.getName() + "s verbleibende Lebenspunkte: " + this.lifePoints);
     }
 
+    /**
+     * Überprüft, ob das Alien besiegt wurde
+     * @return true, wenn die Lebenspunkte 0 (oder weniger) sind, sonst false
+     */
     public boolean isDefeated() {
         return this.lifePoints <= 0;
     }
@@ -67,6 +75,10 @@ public abstract class Alien implements Serializable {
         return lifePoints;
     }
 
+    /**
+     * Überprüft, ob das Alien freundlich ist
+     * @return true, wenn das Alien freundlich ist, false wenn feindlich
+     */
     public boolean isFriendly() {
         return friendly;
     }

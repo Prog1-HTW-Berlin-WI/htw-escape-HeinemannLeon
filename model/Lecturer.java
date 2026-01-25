@@ -7,7 +7,6 @@ import java.io.Serializable;
  * @author Leon Heinemann
  * @author Samira Reinhardt
  */
-
 public class Lecturer implements Serializable {
 
     // Bitte serialVersionUID beibehalten, damit die Klasse bei der
@@ -61,10 +60,18 @@ public class Lecturer implements Serializable {
         return name;
     }
 
+    /**
+     * Überprüft, ob der Übungsleiter bereits unterschrieben hat
+     * @return true, wenn unterschrieben wurde, sonst false
+     */
     public boolean hasSigned() {
         return this.hasSigned;
     }
 
+    /**
+     * Überprüft, ob der Übungsleiter verfügbar ist
+     * @return true, wenn verfügbar, sonst false
+     */
     public boolean isAvailable() {
         return this.isAvailable;
     }

@@ -22,6 +22,9 @@ public class EscapeGame {
     private boolean shortRestTaken = false;
     private int signedCount = 0;
 
+    /**
+     * Legt die Räume und Eigenschaften fest
+     */
     private void initializeRooms() {
         Lecturer lecturer1 = new Lecturer("Herr Poeser");
         Lecturer lecturer2 = new Lecturer("Frau Safitri");
@@ -45,7 +48,9 @@ public class EscapeGame {
         this.hero = new Hero(heroName);
         initializeRooms();
     }
-
+    /**
+     * Leerer Konstruktor für EscapeGame
+     */
     public EscapeGame() {
         this.hero = new Hero("Spieler");
     }
@@ -97,7 +102,9 @@ public class EscapeGame {
             System.out.println("====================");
         }
     }
-
+    /**
+     * Gibt das Spielmenü auf der Konsole aus
+     */
     private void showGameMenu() {
         System.out.println("SPIELMENÜ\n");
         System.out.println("Was möchtest du tun?\n");
@@ -107,12 +114,21 @@ public class EscapeGame {
         System.out.println("(4) Verschnaufpause machen");
         System.out.println("(5) Spiel verlassen");
     }
+
+    /**
+     * Liest die Benutzereingabe von der Konsole ein
+     * @return die Benutzereingabe als String
+     */
     private String readUserInput() {
         Scanner scanner2 = new Scanner(System.in);
         String userInput = scanner2.nextLine();
         return userInput;
     }
     
+    /**
+     * Verarbeitet die Benutzereingabe und führt die entsprechende Aktion aus
+     * @param input die Benutzereingabe als String
+     */
     private void handleUserInput(String input) {
         switch (input) {
             case "1":
@@ -201,6 +217,10 @@ public class EscapeGame {
 
     public boolean isGameFinished = false;
 
+    /**
+     * "HTW erkunden"-Funktion des Spiels
+     * @return Ergebnis der Erkundung
+     */
     public String exploreHTW() {
        
             currentRound++;
@@ -379,6 +399,10 @@ public class EscapeGame {
     return "Platzhalter";
     }
 
+    /**
+     * Quiz mit Prof. Majuntke am Ende des Spiels
+     * @return true, wenn das Quiz bestanden wurde, sonst false
+     */
 public boolean majuntkeQuiz() {
     int question = (int) (Math.random() * 3) + 1;
     int attempts = 0;

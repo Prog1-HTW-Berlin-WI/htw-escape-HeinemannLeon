@@ -30,6 +30,10 @@ public class EscapeApp {
      */
     private boolean gameRunning = true;
 
+    /**
+     * Prüft, ob das Spiel bereits gestartet wurde
+     * @return true, wenn das Spiel gestartet wurde; false, wenn nicht
+     */
     private boolean hasStartedGame = false;
 
     /**
